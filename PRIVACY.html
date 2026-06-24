@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Politique de confidentialité — Protector</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff4444'%3E%3Cpath d='M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3z'/%3E%3C/svg%3E" />
+</head>
+<body>
+  <main class="legal">
+    <a class="back" href="index.html">← Retour à l'accueil</a>
+    <h1>Politique de confidentialité</h1>
+    <p class="updated">Dernière mise à jour : 24 juin 2026</p>
+
+    <p>Cette politique explique quelles données le bot Discord <strong>Protector</strong> (« le Bot ») collecte, comment elles sont utilisées, conservées et protégées. En utilisant le Bot, vous acceptez les pratiques décrites ci-dessous.</p>
+
+    <h2>1. Responsable du traitement</h2>
+    <p>Le Bot est exploité à titre personnel par son opérateur (« nous »). Contact : <strong>eza_official</strong> sur Discord.</p>
+
+    <h2>2. Données que nous collectons et conservons</h2>
+    <p>Le Bot stocke le <strong>strict nécessaire</strong> à son fonctionnement, dans une base de données hébergée sur un serveur privé (auto-hébergement). Aucune donnée n'est vendue ni partagée à des fins commerciales.</p>
+    <h3>a) Configuration par serveur</h3>
+    <ul><li>Identifiant du serveur et réglages choisis (modules activés, seuils, salons de logs, rôles staff, langue, rôle/salon de vérification, etc.).</li></ul>
+    <h3>b) Casier de modération (par serveur)</h3>
+    <ul>
+      <li>Identifiant de l'utilisateur sanctionné, du modérateur, type de sanction, motif éventuel, durée, horodatage et origine (bot, signalement, action externe).</li>
+      <li>Les sanctions effectuées <strong>en dehors du Bot</strong> (via le journal d'audit Discord) peuvent aussi être enregistrées, avec leur motif lorsqu'il est disponible.</li>
+    </ul>
+    <h3>c) Blacklist globale et anti-bot</h3>
+    <ul><li>Identifiants des utilisateurs ou bots inscrits sur la blacklist/whitelist, motif, identifiant du membre de l'équipe ayant agi, horodatage.</li></ul>
+    <h3>d) Équipe Protector</h3>
+    <ul><li>Identifiants des membres de l'équipe et leur niveau de permission.</li></ul>
+    <h3>e) Sauvegardes de structure (anti-nuke)</h3>
+    <ul>
+      <li>Une copie temporaire, <strong>en mémoire vive</strong>, de la structure des salons et rôles (noms, types, catégories, positions, permissions) afin de pouvoir la restaurer après un raid. Ces sauvegardes ne sont pas écrites sur disque et sont perdues au redémarrage.</li>
+      <li>Si l'option <strong>« Restaurer les derniers messages »</strong> est activée (désactivable dans <code>/config → Anti-nuke</code>), cette sauvegarde inclut aussi, <strong>en mémoire vive uniquement</strong>, les <strong>10 derniers messages</strong> de chaque salon textuel (contenu, pseudo et avatar de l'auteur), pour les recréer via webhook si le salon est supprimé. Ces messages sont écrasés à chaque nouvelle sauvegarde (~toutes les 10 min), jamais écrits sur disque, et perdus au redémarrage.</li>
+    </ul>
+
+    <h2>3. Données analysées mais NON conservées</h2>
+    <p>Pour assurer la modération, le Bot <strong>analyse en temps réel</strong> le contenu des messages et des images afin de détecter spam, phishing, contenu NSFW ou propos haineux. <strong>Ce contenu n'est pas stocké</strong> : il est traité en mémoire puis écarté. Seul un court descriptif de l'infraction peut figurer dans le motif d'une sanction. L'analyse d'image est réalisée <strong>localement</strong>, sans envoi à un service tiers.</p>
+
+    <h2>4. Ce que nous ne collectons pas</h2>
+    <ul>
+      <li>Nous ne lisons ni ne stockons vos messages privés (hors commandes staff que vous nous adressez volontairement).</li>
+      <li>Nous ne suivons pas votre activité à des fins publicitaires.</li>
+      <li>Aucune donnée n'est transmise à des annonceurs ou revendue.</li>
+    </ul>
+
+    <h2>5. Base légale (RGPD)</h2>
+    <p>Le traitement repose sur l'<strong>intérêt légitime</strong> de l'opérateur et des serveurs à se protéger contre les abus, et sur l'<strong>exécution du service</strong> que vous demandez en ajoutant le Bot.</p>
+
+    <h2>6. Durée de conservation</h2>
+    <ul>
+      <li>Les données de configuration et de casier sont conservées tant que le Bot est présent sur le serveur, ou jusqu'à leur suppression.</li>
+      <li>Vous pouvez demander la suppression des données vous concernant à tout moment (voir §8).</li>
+    </ul>
+
+    <h2>7. Partage des données</h2>
+    <p>Les données ne sont partagées avec <strong>aucun tiers</strong>, sauf obligation légale. Le Bot s'appuie sur Discord, dont l'usage est régi par sa <a href="https://discord.com/privacy" target="_blank" rel="noopener">politique de confidentialité</a>.</p>
+
+    <h2>8. Vos droits (RGPD)</h2>
+    <p>Conformément au RGPD, vous disposez d'un droit d'<strong>accès</strong>, de <strong>rectification</strong>, d'<strong>effacement</strong>, de <strong>limitation</strong> et d'<strong>opposition</strong>. Pour les exercer, contactez <strong>eza_official</strong> sur Discord en précisant votre identifiant Discord. Vous pouvez aussi saisir la CNIL.</p>
+
+    <h2>9. Sécurité</h2>
+    <p>Les données sont stockées sur un serveur privé à accès restreint. Nous mettons en œuvre des mesures raisonnables pour les protéger, sans pouvoir garantir une sécurité absolue.</p>
+
+    <h2>10. Mineurs</h2>
+    <p>Le Bot s'adresse aux utilisateurs respectant l'âge minimum requis par Discord. Nous ne collectons pas sciemment de données auprès d'enfants en deçà de cet âge.</p>
+
+    <h2>11. Modifications</h2>
+    <p>Cette politique peut être mise à jour. La date de dernière mise à jour figure en haut du document ; les changements importants pourront être annoncés sur le serveur de support.</p>
+
+    <h2>12. Contact</h2>
+    <p>Pour toute question relative à vos données, contactez <strong>eza_official</strong> sur Discord, ou via le <a href="https://discord.gg/fDubp6TA4Y" target="_blank" rel="noopener">serveur de support</a>.</p>
+
+    <p class="note">Document informatif, ne constituant pas un conseil juridique.</p>
+  </main>
+</body>
+</html>

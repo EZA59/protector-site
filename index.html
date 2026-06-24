@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Protector — Protection tout-en-un pour Discord</title>
+  <meta name="description" content="Protector protège ton serveur Discord contre les raids, le spam, le nuke, le phishing et le contenu NSFW. Configuration en un clic." />
+  <meta property="og:title" content="Protector — Protection Discord" />
+  <meta property="og:description" content="Anti-raid, anti-nuke, anti-spam, anti-phishing, filtre NSFW, vérification et plus. Configuration en un clic." />
+  <meta property="og:type" content="website" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff4444'%3E%3Cpath d='M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3z'/%3E%3C/svg%3E" />
+</head>
+<body>
+  <!-- ===== Barre de navigation ===== -->
+  <header class="nav">
+    <a class="brand" href="#top">
+      <svg class="brand-logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3z"/></svg>
+      <span>Protector</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#features">Fonctionnalités</a>
+      <a href="#setup">Configuration</a>
+      <a href="#commands">Commandes</a>
+      <a class="btn btn-ghost" href="https://discord.gg/fDubp6TA4Y" target="_blank" rel="noopener">Support</a>
+    </nav>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero" id="top">
+    <div class="hero-glow"></div>
+    <svg class="hero-shield" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3z"/></svg>
+    <h1>La protection <span>tout-en-un</span><br>pour ton serveur Discord</h1>
+    <p class="lead">
+      Anti-raid, anti-nuke avec restauration, anti-spam, anti-phishing, filtre NSFW,
+      vérification et modération complète. Le tout configurable en <strong>un seul clic</strong>.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot+applications.commands&permissions=1099780090022" target="_blank" rel="noopener">Ajouter à Discord</a>
+      <a class="btn btn-ghost" href="https://discord.gg/fDubp6TA4Y" target="_blank" rel="noopener">Rejoindre le support</a>
+    </div>
+  </section>
+
+  <!-- ===== Fonctionnalités ===== -->
+  <section class="section" id="features">
+    <h2>Une défense sur tous les fronts</h2>
+    <p class="section-sub">Chaque système travaille en arrière-plan, automatiquement.</p>
+    <div class="grid">
+      <article class="card"><div class="card-ico">🛡️</div><h3>Anti-raid</h3><p>Détecte les vagues d'arrivées suspectes et passe le serveur en lockdown, en filtrant les comptes récents.</p></article>
+      <article class="card"><div class="card-ico">💣</div><h3>Anti-nuke + restauration</h3><p>Neutralise un membre/bot qui supprime salons et rôles en masse, puis <strong>recrée la structure</strong> (positions, permissions et derniers messages).</p></article>
+      <article class="card"><div class="card-ico">🚫</div><h3>Anti-spam</h3><p>Flood, doublons, mentions de masse et liens d'invitation : suppression et sanction automatiques.</p></article>
+      <article class="card"><div class="card-ico">🎣</div><h3>Anti-phishing</h3><p>Bloque les liens de scam et d'arnaque (faux Nitro, vols de compte, domaines typosquattés).</p></article>
+      <article class="card"><div class="card-ico">🔞</div><h3>Filtre NSFW</h3><p>Bloque le contenu explicite en texte comme en image, grâce à une analyse locale par IA.</p></article>
+      <article class="card"><div class="card-ico">✅</div><h3>Vérification</h3><p>Un portail à bouton met les nouveaux membres en quarantaine jusqu'à ce qu'ils se vérifient.</p></article>
+      <article class="card"><div class="card-ico">👮</div><h3>Surveillance staff</h3><p>Alerte et agit quand un rôle à permissions sensibles est donné à un compte à risque.</p></article>
+      <article class="card"><div class="card-ico">🔨</div><h3>Modération &amp; casier</h3><p>Avertir, mute, expulser, bannir — avec un casier par serveur et le suivi des sanctions externes.</p></article>
+      <article class="card"><div class="card-ico">🚩</div><h3>Signalements</h3><p>Clic droit pour signaler un message ou un utilisateur, avec preuves et examen par le staff.</p></article>
+    </div>
+  </section>
+
+  <!-- ===== Configuration ===== -->
+  <section class="section section-alt" id="setup">
+    <h2>Prêt en moins d'une minute</h2>
+    <p class="section-sub">Aucune compétence technique requise.</p>
+    <div class="steps">
+      <div class="step"><span class="step-n">1</span><div><h3>Ajoute Protector</h3><p>Invite le bot et place son rôle en haut de la hiérarchie pour qu'il puisse agir.</p></div></div>
+      <div class="step"><span class="step-n">2</span><div><h3>Lance <code>/autoconfig</code></h3><p>Choisis ta langue et un niveau de protection (1 à 3). Tout se met en place : modules réglés, salon de logs, vérification.</p></div></div>
+      <div class="step"><span class="step-n">3</span><div><h3>Affine avec <code>/config</code></h3><p>Un panneau interactif te laisse activer/désactiver chaque module et ajuster les seuils à ta convenance.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ===== Commandes ===== -->
+  <section class="section" id="commands">
+    <h2>Commandes principales</h2>
+    <p class="section-sub">Tape <code>/informations</code> dans Discord pour un guide interactif complet.</p>
+    <div class="cmd-grid">
+      <div class="cmd"><code>/autoconfig</code><span>Configuration automatique complète</span></div>
+      <div class="cmd"><code>/config</code><span>Panneau de configuration interactif</span></div>
+      <div class="cmd"><code>/informations</code><span>Guide de tous les systèmes</span></div>
+      <div class="cmd"><code>/stats</code><span>Statistiques de modération du serveur</span></div>
+      <div class="cmd"><code>/verification-setup</code><span>Met en place le portail de vérification</span></div>
+      <div class="cmd"><code>/warn /mute /kick /ban</code><span>Sanctions de modération</span></div>
+      <div class="cmd"><code>/history</code><span>Casier d'un membre</span></div>
+      <div class="cmd"><code>/info-server /info-user</code><span>Informations serveur / membre</span></div>
+      <div class="cmd"><code>Signaler le message</code><span>Menu contextuel sur un message</span></div>
+      <div class="cmd"><code>Signaler l'utilisateur</code><span>Menu contextuel sur un membre</span></div>
+    </div>
+  </section>
+
+  <!-- ===== CTA support ===== -->
+  <section class="cta">
+    <h2>Une question ? Besoin d'aide ?</h2>
+    <p>Rejoins le serveur de support pour l'assistance, les annonces et les retours.</p>
+    <a class="btn btn-primary" href="https://discord.gg/fDubp6TA4Y" target="_blank" rel="noopener">Rejoindre le serveur support</a>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="footer-brand">
+      <svg class="brand-logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3z"/></svg>
+      <span>Protector</span>
+    </div>
+    <nav class="footer-links">
+      <a href="https://discord.gg/fDubp6TA4Y" target="_blank" rel="noopener">Support</a>
+      <a href="TERMS.html">Conditions</a>
+      <a href="PRIVACY.html">Confidentialité</a>
+    </nav>
+    <p class="footer-copy">© <span id="year"></span> Protector. Tous droits réservés.</p>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
