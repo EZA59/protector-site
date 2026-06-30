@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Protector — Protection tout-en-un pour Discord</title>
-  <meta name="description" content="Protector protège ton serveur Discord contre les raids, le spam, le nuke, le phishing et le contenu NSFW. Configuration en un clic." />
+  <meta name="description" content="Protector protège ton serveur Discord : anti-raid, anti-nuke avec restauration, anti-spam, anti-phishing, NSFW, vérification, modération et blacklist réseau. Gratuit, configurable en un clic." />
   <meta property="og:title" content="Protector — Protection Discord" />
-  <meta property="og:description" content="Anti-raid, anti-nuke, anti-spam, anti-phishing, filtre NSFW, vérification et plus. Configuration en un clic." />
+  <meta property="og:description" content="Anti-raid, anti-nuke, anti-spam, anti-phishing, filtre NSFW, vérification, modération et plus. Gratuit." />
   <meta property="og:type" content="website" />
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff4444'%3E%3Cpath d='M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3z'/%3E%3C/svg%3E" />
@@ -20,8 +20,8 @@
     </a>
     <nav class="nav-links">
       <a href="#features">Fonctionnalités</a>
-      <a href="#setup">Configuration</a>
-      <a href="#commands">Commandes</a>
+      <a href="#premium">Premium</a>
+      <a href="documentation.html">Documentation</a>
       <a class="btn btn-ghost" href="https://discord.gg/fDubp6TA4Y" target="_blank" rel="noopener">Support</a>
     </nav>
   </header>
@@ -30,31 +30,35 @@
   <section class="hero" id="top">
     <div class="hero-glow"></div>
     <svg class="hero-shield" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3z"/></svg>
-    <h1>La protection <span>tout-en-un</span><br>pour ton serveur Discord</h1>
+    <h1>Garde ton serveur Discord<br><span>en sécurité</span></h1>
     <p class="lead">
-      Anti-raid, anti-nuke avec restauration, anti-spam, anti-phishing, filtre NSFW,
-      vérification et modération complète. Le tout configurable en <strong>un seul clic</strong>.
+      Protector gère les raids, les nukes, le spam, le phishing et le contenu NSFW
+      automatiquement. Tu installes, tu choisis ton niveau de protection, et c'est tout.
+      Gratuit, et entièrement configurable serveur par serveur.
     </p>
     <div class="hero-actions">
-      <a class="btn btn-primary" href="https://discord.com/oauth2/authorize?client_id=1518768862538108979&scope=bot+applications.commands&permissions=1099780090022" target="_blank" rel="noopener">Ajouter à Discord</a>
-      <a class="btn btn-ghost" href="https://discord.gg/fDubp6TA4Y" target="_blank" rel="noopener">Rejoindre le support</a>
+      <a class="btn btn-primary" href="https://discord.com/oauth2/authorize?client_id=1518768862538108979&scope=bot+applications.commands&permissions=8" target="_blank" rel="noopener">Ajouter à Discord</a>
+      <a class="btn btn-ghost" href="documentation.html">Lire la documentation</a>
     </div>
   </section>
 
   <!-- ===== Fonctionnalités ===== -->
   <section class="section" id="features">
-    <h2>Une défense sur tous les fronts</h2>
-    <p class="section-sub">Chaque système travaille en arrière-plan, automatiquement.</p>
+    <h2>Ce que Protector fait pour toi</h2>
+    <p class="section-sub">Chaque système tourne en arrière-plan, sans rien avoir à surveiller.</p>
     <div class="grid">
-      <article class="card"><div class="card-ico">🛡️</div><h3>Anti-raid</h3><p>Détecte les vagues d'arrivées suspectes et passe le serveur en lockdown, en filtrant les comptes récents.</p></article>
-      <article class="card"><div class="card-ico">💣</div><h3>Anti-nuke + restauration</h3><p>Neutralise un membre/bot qui supprime salons et rôles en masse, puis <strong>recrée la structure</strong> (positions, permissions et derniers messages).</p></article>
-      <article class="card"><div class="card-ico">🚫</div><h3>Anti-spam</h3><p>Flood, doublons, mentions de masse et liens d'invitation : suppression et sanction automatiques.</p></article>
-      <article class="card"><div class="card-ico">🎣</div><h3>Anti-phishing</h3><p>Bloque les liens de scam et d'arnaque (faux Nitro, vols de compte, domaines typosquattés).</p></article>
-      <article class="card"><div class="card-ico">🔞</div><h3>Filtre NSFW</h3><p>Bloque le contenu explicite en texte comme en image, grâce à une analyse locale par IA.</p></article>
-      <article class="card"><div class="card-ico">✅</div><h3>Vérification</h3><p>Un portail à bouton met les nouveaux membres en quarantaine jusqu'à ce qu'ils se vérifient.</p></article>
-      <article class="card"><div class="card-ico">👮</div><h3>Surveillance staff</h3><p>Alerte et agit quand un rôle à permissions sensibles est donné à un compte à risque.</p></article>
-      <article class="card"><div class="card-ico">🔨</div><h3>Modération &amp; casier</h3><p>Avertir, mute, expulser, bannir — avec un casier par serveur et le suivi des sanctions externes.</p></article>
-      <article class="card"><div class="card-ico">🚩</div><h3>Signalements</h3><p>Clic droit pour signaler un message ou un utilisateur, avec preuves et examen par le staff.</p></article>
+      <article class="card"><div class="card-ico">💣</div><h3>Anti-nuke + restauration</h3><p>Quelqu'un supprime salons et rôles en masse ? Protector le neutralise et <strong>recrée la structure</strong> : salons, rôles, permissions, positions, nom et icône du serveur.</p></article>
+      <article class="card"><div class="card-ico">🌊</div><h3>Anti-raid</h3><p>Détecte les vagues d'arrivées et passe le serveur en lockdown, en filtrant les comptes trop récents.</p></article>
+      <article class="card"><div class="card-ico">🚫</div><h3>Anti-spam</h3><p>Flood, doublons, mentions de masse, liens d'invitation — et même les applications ajoutées à un profil.</p></article>
+      <article class="card"><div class="card-ico">🎣</div><h3>Anti-phishing &amp; anti-bot</h3><p>Liens de scam, faux Nitro, webhooks abusifs et bots malveillants bloqués automatiquement.</p></article>
+      <article class="card"><div class="card-ico">🔞</div><h3>Filtre NSFW</h3><p>Texte et images analysés en local. La liste de mots gère les contournements (p.o.r.n, leet) sans bloquer les mots innocents.</p></article>
+      <article class="card"><div class="card-ico">✅</div><h3>Vérification</h3><p>Portail à bouton ou <strong>captcha image</strong> : les nouveaux membres restent en quarantaine jusqu'à ce qu'ils se vérifient.</p></article>
+      <article class="card"><div class="card-ico">📊</div><h3>Score de risque</h3><p>À l'arrivée, une note basée sur l'âge du compte, la réputation réseau et la ressemblance à des raiders connus.</p></article>
+      <article class="card"><div class="card-ico">⛔</div><h3>Blacklist réseau</h3><p>Un raider banni sur un serveur protégé est bloqué partout. Un système d'appels permet de contester.</p></article>
+      <article class="card"><div class="card-ico">🔨</div><h3>Modération &amp; casier</h3><p>Avertir, mute, kick, ban, tempban — avec un casier par serveur et le suivi des sanctions faites hors du bot.</p></article>
+      <article class="card"><div class="card-ico">📜</div><h3>Journal d'évènements</h3><p>Messages, membres, rôles, salons, vocal : un journal détaillé envoyé via webhooks, dans les salons de ton choix.</p></article>
+      <article class="card"><div class="card-ico">📨</div><h3>Invite tracker</h3><p>Sache qui a invité qui — pratique pour remonter à l'origine d'un raid.</p></article>
+      <article class="card"><div class="card-ico">💾</div><h3>Sauvegarde &amp; restauration</h3><p><code>/backup</code> et <code>/restore</code> : capture la structure du serveur et restaure-la quand tu veux.</p></article>
     </div>
   </section>
 
@@ -63,34 +67,27 @@
     <h2>Prêt en moins d'une minute</h2>
     <p class="section-sub">Aucune compétence technique requise.</p>
     <div class="steps">
-      <div class="step"><span class="step-n">1</span><div><h3>Ajoute Protector</h3><p>Invite le bot et place son rôle en haut de la hiérarchie pour qu'il puisse agir.</p></div></div>
+      <div class="step"><span class="step-n">1</span><div><h3>Ajoute Protector</h3><p>Invite le bot, puis place son rôle <strong>tout en haut</strong> de la liste des rôles pour qu'il puisse agir.</p></div></div>
       <div class="step"><span class="step-n">2</span><div><h3>Lance <code>/autoconfig</code></h3><p>Choisis ta langue et un niveau de protection (1 à 3). Tout se met en place : modules réglés, salon de logs, vérification.</p></div></div>
-      <div class="step"><span class="step-n">3</span><div><h3>Affine avec <code>/config</code></h3><p>Un panneau interactif te laisse activer/désactiver chaque module et ajuster les seuils à ta convenance.</p></div></div>
+      <div class="step"><span class="step-n">3</span><div><h3>Affine avec <code>/config</code></h3><p>Un panneau interactif te laisse activer ou désactiver chaque module et régler les seuils.</p></div></div>
     </div>
   </section>
 
-  <!-- ===== Commandes ===== -->
-  <section class="section" id="commands">
-    <h2>Commandes principales</h2>
-    <p class="section-sub">Tape <code>/informations</code> dans Discord pour un guide interactif complet.</p>
-    <div class="cmd-grid">
-      <div class="cmd"><code>/autoconfig</code><span>Configuration automatique complète</span></div>
-      <div class="cmd"><code>/config</code><span>Panneau de configuration interactif</span></div>
-      <div class="cmd"><code>/informations</code><span>Guide de tous les systèmes</span></div>
-      <div class="cmd"><code>/stats</code><span>Statistiques de modération du serveur</span></div>
-      <div class="cmd"><code>/verification-setup</code><span>Met en place le portail de vérification</span></div>
-      <div class="cmd"><code>/warn /mute /kick /ban</code><span>Sanctions de modération</span></div>
-      <div class="cmd"><code>/history</code><span>Casier d'un membre</span></div>
-      <div class="cmd"><code>/info-server /info-user</code><span>Informations serveur / membre</span></div>
-      <div class="cmd"><code>Signaler le message</code><span>Menu contextuel sur un message</span></div>
-      <div class="cmd"><code>Signaler l'utilisateur</code><span>Menu contextuel sur un membre</span></div>
+  <!-- ===== Premium ===== -->
+  <section class="section" id="premium">
+    <h2>Premium &amp; Premium Plus</h2>
+    <p class="section-sub">Tout l'essentiel reste gratuit. Le premium ajoute une couche d'analyse en plus.</p>
+    <div class="grid">
+      <article class="card"><div class="card-ico">🆓</div><h3>Gratuit</h3><p>Tous les systèmes de protection, la modération, la vérification, le journal d'évènements, les sauvegardes et la blacklist réseau.</p></article>
+      <article class="card"><div class="card-ico">💎</div><h3>Premium</h3><p>Modération par IA sur les messages signalés (juge le contexte, pas juste les mots) et analyse NSFW contextuelle plus fine.</p></article>
+      <article class="card"><div class="card-ico">💎➕</div><h3>Premium Plus</h3><p>Analyse en temps réel de chaque message (menaces, haine, toxicité sévère) et action automatique. Plus de slots de sauvegarde.</p></article>
     </div>
   </section>
 
   <!-- ===== CTA support ===== -->
   <section class="cta">
     <h2>Une question ? Besoin d'aide ?</h2>
-    <p>Rejoins le serveur de support pour l'assistance, les annonces et les retours.</p>
+    <p>Le serveur de support est là pour l'assistance, les annonces et tes retours.</p>
     <a class="btn btn-primary" href="https://discord.gg/fDubp6TA4Y" target="_blank" rel="noopener">Rejoindre le serveur support</a>
   </section>
 
@@ -101,6 +98,7 @@
       <span>Protector</span>
     </div>
     <nav class="footer-links">
+      <a href="documentation.html">Documentation</a>
       <a href="https://discord.gg/fDubp6TA4Y" target="_blank" rel="noopener">Support</a>
       <a href="TERMS.html">Conditions</a>
       <a href="PRIVACY.html">Confidentialité</a>
