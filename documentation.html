@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentation — Protector</title>
+  <meta name="description" content="Documentation complète de Protector : démarrage, configuration, systèmes de protection, modération, vérification, sauvegardes, premium et commandes." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff4444'%3E%3Cpath d='M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3z'/%3E%3C/svg%3E" />
+  <style>
+    .doc { max-width: 820px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+    .doc h2 { margin-top: 2.8rem; padding-top: .6rem; border-top: 1px solid rgba(255,255,255,.08); }
+    .doc h3 { margin-top: 1.6rem; }
+    .doc p, .doc li { line-height: 1.7; }
+    .doc ul { padding-left: 1.2rem; }
+    .doc li { margin: .35rem 0; }
+    .doc code { background: rgba(255,68,68,.12); color: #ff6b6b; padding: .12em .4em; border-radius: 5px; font-size: .92em; }
+    .doc table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .95rem; }
+    .doc th, .doc td { text-align: left; padding: .55rem .6rem; border-bottom: 1px solid rgba(255,255,255,.08); vertical-align: top; }
+    .doc th { color: #fff; }
+    .toc { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 1rem 1.4rem; margin: 1.5rem 0; }
+    .toc ul { columns: 2; column-gap: 2rem; margin: .5rem 0 0; }
+    .note { background: rgba(255,68,68,.08); border-left: 3px solid #ff4444; border-radius: 0 8px 8px 0; padding: .8rem 1rem; margin: 1rem 0; }
+    @media (max-width: 600px) { .toc ul { columns: 1; } }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="index.html">
+      <svg class="brand-logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3z"/></svg>
+      <span>Protector</span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Accueil</a>
+      <a class="btn btn-ghost" href="https://discord.gg/fDubp6TA4Y" target="_blank" rel="noopener">Support</a>
+    </nav>
+  </header>
+
+  <main class="doc">
+    <h1>Documentation</h1>
+    <p class="lead">Tout ce qu'il faut savoir pour installer Protector, le configurer et tirer parti de ses systèmes. Dans Discord, la commande <code>/informations</code> donne aussi un guide interactif de chaque module.</p>
+
+    <div class="toc">
+      <strong>Sommaire</strong>
+      <ul>
+        <li><a href="#demarrage">Démarrage rapide</a></li>
+        <li><a href="#config">Configuration</a></li>
+        <li><a href="#protection">Systèmes de protection</a></li>
+        <li><a href="#verification">Vérification</a></li>
+        <li><a href="#moderation">Modération &amp; casier</a></li>
+        <li><a href="#signalements">Signalements</a></li>
+        <li><a href="#logs">Journal d'évènements</a></li>
+        <li><a href="#backup">Sauvegarde &amp; restauration</a></li>
+        <li><a href="#reseau">Blacklist réseau &amp; appels</a></li>
+        <li><a href="#premium">Premium &amp; Premium Plus</a></li>
+        <li><a href="#permissions">Permissions requises</a></li>
+        <li><a href="#commandes">Liste des commandes</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </div>
+
+    <h2 id="demarrage">Démarrage rapide</h2>
+    <ol>
+      <li><strong>Ajoute le bot</strong> à ton serveur depuis le bouton « Ajouter à Discord » de l'accueil.</li>
+      <li><strong>Place le rôle « Protector » tout en haut</strong> de ta liste de rôles. C'est essentiel : un rôle ne peut jamais agir sur un rôle situé au-dessus de lui. Sans ça, certaines actions (anti-nuke, restauration, sanctions) échoueront.</li>
+      <li><strong>Lance <code>/autoconfig</code></strong> : choisis ta langue et un niveau de protection (1 = léger, 2 = standard, 3 = strict). Protector active et règle tous les modules, crée un salon de logs et un portail de vérification.</li>
+    </ol>
+    <p>C'est suffisant pour être protégé. Tu peux ensuite tout ajuster à la main.</p>
+
+    <h2 id="config">Configuration</h2>
+    <p>La commande <code>/config</code> ouvre un panneau interactif (un seul message, privé). Chaque module a un bouton pour l'activer/désactiver, des formulaires pour les seuils et durées, et des menus pour choisir les salons et rôles. Tout est enregistré instantanément, serveur par serveur.</p>
+    <p>Le bouton <strong>🌐 Langue</strong> change la langue du serveur (français ou anglais). La commande <code>/informations</code> bascule la langue rien que pour toi, le temps de lire.</p>
+    <div class="note">⚠️ Seuls les membres ayant la permission <strong>Gérer le serveur</strong> peuvent ouvrir et modifier la configuration.</div>
+
+    <h2 id="protection">Systèmes de protection</h2>
+
+    <h3>Anti-raid</h3>
+    <p>Détecte un afflux anormal d'arrivées sur une courte période et passe le serveur en <strong>lockdown</strong> : il élève le niveau de vérification et expulse ou bannit les comptes trop récents pendant la durée du raid. Réglable : seuil et fenêtre d'arrivées, âge minimum du compte, action, durée.</p>
+
+    <h3>Anti-spam</h3>
+    <p>Bloque le flood, les messages identiques répétés, les mentions de masse et les liens d'invitation. Il gère aussi les <strong>applications ajoutées à un profil</strong> (apps utilisateur) : en cas de spam, l'auteur est expulsé, l'app bannie si possible et les messages supprimés. Un spam du même message dans plusieurs salons alerte aussi l'équipe Protector.</p>
+
+    <h3>Anti-nuke &amp; restauration</h3>
+    <p>Si un membre ou un bot enchaîne des <strong>actions destructrices en masse</strong> (suppression de salons/rôles, bans en rafale, webhooks), Protector le neutralise, prévient le propriétaire, puis <strong>restaure</strong> la structure depuis une sauvegarde récente : salons, rôles, permissions, positions, nom et icône, et il relie automatiquement ta configuration aux salons recréés.</p>
+    <p>La sanction est <strong>graduée</strong> pour les humains : une blacklist globale n'est appliquée qu'au-delà d'un certain nombre d'actions destructrices. En-dessous, c'est une sanction locale et une restauration. Un bot raideur, lui, est toujours blacklisté.</p>
+
+    <h3>Anti-phishing, anti-webhook, anti-bot</h3>
+    <ul>
+      <li><strong>Anti-phishing</strong> : supprime les liens de scam (faux Nitro, vols de compte, domaines typosquattés) et sanctionne.</li>
+      <li><strong>Anti-webhook</strong> : quand un webhook poste du spam ou du phishing, c'est le webhook lui-même qui est supprimé.</li>
+      <li><strong>Anti-bot</strong> : les bots signalés comme malveillants sont bannis dès leur arrivée. Les bots de confiance peuvent être mis en whitelist.</li>
+    </ul>
+
+    <h3>Filtre NSFW</h3>
+    <p>Analyse le <strong>texte</strong> (liste de mots tolérante aux contournements comme « p.o.r.n » ou le leet, sans bloquer les mots innocents) et les <strong>images</strong> (analyse locale). Tu peux autoriser des salons précis et choisir l'action (supprimer, ou supprimer + timeout).</p>
+
+    <h3>Score de risque</h3>
+    <p>À chaque arrivée, Protector calcule une note de 0 à 100 en combinant l'âge du compte, la réputation réseau (déjà blacklisté ailleurs ?), l'avatar par défaut et la ressemblance pseudo/avatar avec des raiders connus. Le badge est journalisé ; une action automatique au-delà d'un score élevé est possible (désactivée par défaut).</p>
+
+    <h3>Surveillance du staff</h3>
+    <p>Quand un rôle à permissions sensibles est attribué à un compte jugé à risque (trop récent, présent depuis peu), Protector alerte le propriétaire et retire le rôle si possible.</p>
+
+    <h2 id="verification">Vérification</h2>
+    <p>Les nouveaux membres sont mis en <strong>quarantaine</strong> : ils ne voient que le salon de vérification. Deux modes au choix dans <code>/config → Vérification</code> :</p>
+    <ul>
+      <li><strong>Bouton</strong> — un clic sur « Vérifier » débloque l'accès.</li>
+      <li><strong>Captcha image</strong> — à l'arrivée, un captcha est posté avec la mention du membre. Il recopie le code dans le salon ; bon code, son message et celui du bot sont supprimés et l'accès est débloqué.</li>
+    </ul>
+    <p>Tu peux aussi définir un <strong>rôle ajouté automatiquement après la vérification</strong>. Mise en place : <code>/verification-setup role:&lt;rôle de quarantaine&gt; channel:&lt;salon de vérif&gt;</code>.</p>
+
+    <h2 id="moderation">Modération &amp; casier</h2>
+    <p>Commandes classiques : <code>/warn</code>, <code>/mute</code>, <code>/kick</code>, <code>/ban</code>, <code>/unmute</code>, <code>/unban</code>, <code>/tempban</code>. Chaque sanction est enregistrée dans un <strong>casier par serveur</strong>, consultable avec <code>/history</code>. Les sanctions faites en dehors du bot (via le journal d'audit Discord) sont aussi captées. <code>/lockdown</code> et <code>/unlock</code> verrouillent/déverrouillent tout le serveur en cas d'urgence.</p>
+
+    <h2 id="signalements">Signalements</h2>
+    <p>Clic droit sur un message → <strong>Signaler le message</strong> : un formulaire envoie le message au salon de signalements du serveur, où le staff peut sanctionner ou ignorer. Clic droit sur un membre → <strong>Signaler l'utilisateur</strong> : un rapport (raison, liens, images) est envoyé à l'équipe Protector, qui peut l'examiner sans rejoindre ton serveur.</p>
+
+    <h2 id="logs">Journal d'évènements</h2>
+    <p>Désactivé par défaut. Une fois activé, tu choisis les catégories à journaliser (messages, membres, modération, rôles, salons, serveur, vocal) et un salon par défaut ; chaque catégorie peut avoir son propre salon. Les logs sont envoyés via un webhook propre à chaque salon, détaillés (auteur, contenu du changement, permissions d'un salon créé, etc.).</p>
+
+    <h2 id="backup">Sauvegarde &amp; restauration</h2>
+    <p>Réservé au propriétaire, et indépendant des sauvegardes internes de l'anti-nuke. <code>/backup create</code> capture la structure complète (rôles, salons, permissions, derniers messages texte). <code>/backup list</code> et <code>/backup delete</code> gèrent tes sauvegardes. <code>/restore</code> affiche le contenu d'une sauvegarde, te laisse choisir de restaurer ou non les messages, puis restaure. Une sauvegarde automatique est créée à l'arrivée du bot.</p>
+
+    <h2 id="reseau">Blacklist réseau &amp; appels</h2>
+    <p>Quand un utilisateur atteint un niveau d'infraction très élevé (ou lors d'un nuke confirmé), il est <strong>blacklisté globalement</strong> : banni de tous les serveurs que Protector protège, et bloqué s'il tente d'en rejoindre un. Il est prévenu en MP au préalable. La commande <code>/appeal</code> lui permet de <strong>contester</strong> ; l'équipe Protector approuve (levée de la blacklist) ou refuse. Le pouvoir de blacklist est réservé à l'équipe Protector — les administrateurs de serveur n'y ont pas accès.</p>
+
+    <h2 id="premium">Premium &amp; Premium Plus</h2>
+    <p>Tous les systèmes ci-dessus sont <strong>gratuits</strong>. Le premium ajoute des analyses en plus :</p>
+    <table>
+      <tr><th>Palier</th><th>Ce qu'il ajoute</th></tr>
+      <tr><td><strong>Premium</strong></td><td>Modération par IA sur les messages <em>signalés</em> (juge le contexte : haine codée, contournements, sarcasme) et analyse NSFW contextuelle plus fine.</td></tr>
+      <tr><td><strong>Premium&nbsp;Plus</strong></td><td>Analyse en <strong>temps réel</strong> de chaque message (menaces, haine, toxicité sévère) avec action automatique, et plus de slots de sauvegarde.</td></tr>
+    </table>
+    <p>Le premium s'obtient via l'abonnement Discord. L'analyse par un service tiers (utilisée par ces options) reste activable par l'administrateur et est décrite dans la <a href="PRIVACY.html">politique de confidentialité</a>.</p>
+
+    <h2 id="permissions">Permissions requises</h2>
+    <p>Pour fonctionner pleinement, Protector a besoin des permissions de modération (gérer les salons, les rôles, les messages, expulser, bannir, voir le journal d'audit, gérer les webhooks). Le plus important : <strong>son rôle doit être tout en haut</strong> de la hiérarchie. Discord ne permet jamais à un rôle d'agir sur un rôle situé plus haut — c'est la cause n°1 des « action impossible ».</p>
+
+    <h2 id="commandes">Liste des commandes</h2>
+    <div class="cmd-grid">
+      <div class="cmd"><code>/autoconfig</code><span>Configuration automatique complète</span></div>
+      <div class="cmd"><code>/config</code><span>Panneau de configuration interactif</span></div>
+      <div class="cmd"><code>/informations</code><span>Guide interactif de tous les systèmes</span></div>
+      <div class="cmd"><code>/verification-setup</code><span>Met en place le portail de vérification</span></div>
+      <div class="cmd"><code>/warn /mute /kick /ban</code><span>Sanctions de modération</span></div>
+      <div class="cmd"><code>/unmute /unban /tempban</code><span>Levée de sanction / ban temporaire</span></div>
+      <div class="cmd"><code>/history</code><span>Casier d'un membre</span></div>
+      <div class="cmd"><code>/lockdown /unlock</code><span>Verrouillage d'urgence</span></div>
+      <div class="cmd"><code>/backup /restore</code><span>Sauvegarde et restauration du serveur</span></div>
+      <div class="cmd"><code>/invites</code><span>Qui a invité qui</span></div>
+      <div class="cmd"><code>/stats</code><span>Statistiques de modération</span></div>
+      <div class="cmd"><code>/appeal</code><span>Contester une blacklist</span></div>
+      <div class="cmd"><code>/support</code><span>Invitation vers le serveur support</span></div>
+      <div class="cmd"><code>Signaler le message / l'utilisateur</code><span>Menus contextuels (clic droit)</span></div>
+    </div>
+
+    <h2 id="faq">FAQ</h2>
+    <h3>Protector est-il gratuit ?</h3>
+    <p>Oui. Toute la protection, la modération et la gestion sont gratuites. Le premium n'ajoute que des analyses optionnelles.</p>
+    <h3>L'anti-nuke dit « action impossible », pourquoi ?</h3>
+    <p>Le rôle de Protector n'est pas assez haut. Place-le tout en haut de la liste des rôles et donne-lui les permissions de modération.</p>
+    <h3>La restauration récupère-t-elle les messages ?</h3>
+    <p>Elle peut recréer les derniers messages texte des salons (via webhook), si l'option est activée. Les autres contenus ne sont pas conservés.</p>
+    <h3>Mes données sont-elles en sécurité ?</h3>
+    <p>Protector ne stocke que le strict nécessaire et n'analyse les messages qu'en temps réel, sans les conserver. Détails dans la <a href="PRIVACY.html">politique de confidentialité</a>.</p>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-brand">
+      <svg class="brand-logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3z"/></svg>
+      <span>Protector</span>
+    </div>
+    <nav class="footer-links">
+      <a href="index.html">Accueil</a>
+      <a href="https://discord.gg/fDubp6TA4Y" target="_blank" rel="noopener">Support</a>
+      <a href="TERMS.html">Conditions</a>
+      <a href="PRIVACY.html">Confidentialité</a>
+    </nav>
+    <p class="footer-copy">© <span id="year"></span> Protector. Tous droits réservés.</p>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
