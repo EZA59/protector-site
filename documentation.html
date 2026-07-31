@@ -53,6 +53,7 @@
         <li><a href="#backup">Sauvegarde &amp; restauration</a></li>
         <li><a href="#reseau">Blacklist réseau &amp; appels</a></li>
         <li><a href="#premium">Premium &amp; Premium Plus</a></li>
+        <li><a href="#webhook">Webhook sortant</a></li>
         <li><a href="#permissions">Permissions requises</a></li>
         <li><a href="#commandes">Liste des commandes</a></li>
         <li><a href="#faq">FAQ</a></li>
@@ -131,6 +132,109 @@
       <tr><td><strong>Premium&nbsp;Plus</strong></td><td>Analyse en <strong>temps réel</strong> de chaque message (menaces, haine, toxicité sévère) avec action automatique, et plus de slots de sauvegarde.</td></tr>
     </table>
     <p>Le premium s'obtient via l'abonnement Discord. L'analyse par un service tiers (utilisée par ces options) reste activable par l'administrateur et est décrite dans la <a href="PRIVACY.html">politique de confidentialité</a>.</p>
+
+
+    <h2 id="webhook">Webhook sortant <span class="tag">Premium Plus</span></h2>
+    <p>Protector peut envoyer chaque incident de sécurité vers <strong>votre propre serveur</strong>, en HTTPS, pour l'archiver, déclencher une alerte ou l'intégrer à vos outils. Chaque requête est <strong>signée cryptographiquement</strong> : vous pouvez prouver qu'elle vient bien de Protector et qu'elle n'a pas été modifiée en route.</p>
+
+    <h3>Mise en place</h3>
+    <p>Le propriétaire du serveur (et lui seul) configure l'endpoint :</p>
+    <table>
+      <tr><th>Commande</th><th>Rôle</th></tr>
+      <tr><td><code>/webhook set url:&lt;https://…&gt;</code></td><td>Définit l'endpoint et affiche la clé de signature</td></tr>
+      <tr><td><code>/webhook key</code></td><td>Réaffiche la clé (message privé, masquée)</td></tr>
+      <tr><td><code>/webhook rotate</code></td><td>Régénère la clé si elle a fuité — l'ancienne cesse immédiatement de fonctionner</td></tr>
+      <tr><td><code>/webhook test</code></td><td>Envoie un évènement de test</td></tr>
+      <tr><td><code>/webhook status</code></td><td>État, dernier envoi, échecs consécutifs</td></tr>
+      <tr><td><code>/webhook disable</code></td><td>Coupe l'envoi sans effacer la configuration</td></tr>
+    </table>
+    <p><strong>Contraintes de sécurité :</strong> l'URL doit être en <strong>HTTPS</strong>, et les adresses locales ou privées sont refusées (<code>localhost</code>, <code>127.x</code>, <code>10.x</code>, <code>192.168.x</code>, <code>172.16–31.x</code>, <code>169.254.x</code>, <code>.local</code>). Après 20 échecs consécutifs, l'envoi se désactive automatiquement pour ne pas marteler un endpoint hors service.</p>
+
+    <h3>Ce que Protector envoie</h3>
+    <p>Une requête <code>POST</code> avec un corps JSON. Les en-têtes :</p>
+    <table>
+      <tr><th>En-tête</th><th>Contenu</th></tr>
+      <tr><td><code>X-Protector-Event</code></td><td>Type d'évènement (ex. <code>incident.nuke</code>)</td></tr>
+      <tr><td><code>X-Protector-Timestamp</code></td><td>Horodatage Unix (secondes) de l'envoi</td></tr>
+      <tr><td><code>X-Protector-Signature</code></td><td><code>sha256=&lt;signature hexadécimale&gt;</code></td></tr>
+      <tr><td><code>Content-Type</code></td><td><code>application/json</code></td></tr>
+    </table>
+    <p>Types d'évènements actuels : <code>incident.raid</code>, <code>incident.nuke</code>, <code>incident.spam</code>, <code>incident.lockdown</code>, et <code>test</code>.</p>
+    <p>Exemple de corps reçu :</p>
+    <pre><code>{
+  "type": "incident.nuke",
+  "guild": {
+    "id": "123456789012345678",
+    "name": "Mon serveur",
+    "member_count": 1250
+  },
+  "culprit_id": "987654321098765432",
+  "adder_id": null,
+  "description": "Actions destructrices en masse détectées…",
+  "guild_id": "123456789012345678",
+  "sent_at": "2026-07-31T02:14:07.512Z"
+}</code></pre>
+    <p>Aucun contenu de message privé n'est transmis : seuls l'identifiant du serveur, celui du ou des responsables, et le résumé de l'incident.</p>
+
+    <h3>Vérifier la signature</h3>
+    <p>La signature est un <strong>HMAC-SHA256</strong> calculé sur la chaîne <code>timestamp + "." + corps brut</code>, avec votre clé secrète. <strong>Utilisez le corps brut</strong> (avant tout parsing JSON) : ré-encoder le JSON changerait les octets et invaliderait la signature.</p>
+    <p>Exemple en Node.js (Express) :</p>
+    <pre><code>import express from 'express';
+import { createHmac, timingSafeEqual } from 'node:crypto';
+
+const SECRET = process.env.PROTECTOR_SECRET; // la clé donnée par /webhook set
+const app = express();
+
+// Important : on garde le corps BRUT pour vérifier la signature
+app.post('/protector', express.raw({ type: 'application/json' }), (req, res) =&gt; {
+  const ts  = req.get('X-Protector-Timestamp');
+  const sig = (req.get('X-Protector-Signature') || '').replace('sha256=', '');
+  const raw = req.body.toString('utf8');
+
+  // 1) Rejeter les requêtes trop anciennes (protection contre le rejeu)
+  if (Math.abs(Date.now() / 1000 - Number(ts)) &gt; 300) return res.sendStatus(408);
+
+  // 2) Comparer les signatures à temps constant
+  const expected = createHmac('sha256', SECRET).update(`${ts}.${raw}`).digest('hex');
+  const a = Buffer.from(expected), b = Buffer.from(sig);
+  if (a.length !== b.length || !timingSafeEqual(a, b)) return res.sendStatus(401);
+
+  const event = JSON.parse(raw);
+  console.log('Incident reçu :', event.type, event.guild.name);
+  res.sendStatus(200); // répondez 2xx, sinon Protector comptera un échec
+});
+
+app.listen(3000);</code></pre>
+    <p>Exemple en Python (Flask) :</p>
+    <pre><code>import hmac, hashlib, time
+from flask import Flask, request
+
+SECRET = "votre_cle"
+app = Flask(__name__)
+
+@app.post("/protector")
+def protector():
+    ts  = request.headers.get("X-Protector-Timestamp", "0")
+    sig = request.headers.get("X-Protector-Signature", "").replace("sha256=", "")
+    raw = request.get_data(as_text=True)
+
+    if abs(time.time() - int(ts)) &gt; 300:
+        return "", 408
+
+    expected = hmac.new(SECRET.encode(), f"{ts}.{raw}".encode(), hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(expected, sig):
+        return "", 401
+
+    print("Incident reçu :", request.json["type"])
+    return "", 200</code></pre>
+
+    <h3>Bonnes pratiques</h3>
+    <ul>
+      <li><strong>Répondez rapidement</strong> un code 2xx : au-delà de 8 secondes, l'envoi est considéré comme échoué. Traitez en arrière-plan si nécessaire.</li>
+      <li><strong>Rejetez les requêtes trop anciennes</strong> (fenêtre de 5 minutes recommandée) pour empêcher qu'une requête interceptée soit rejouée.</li>
+      <li><strong>Comparez à temps constant</strong> (<code>timingSafeEqual</code> / <code>compare_digest</code>), jamais avec <code>==</code>.</li>
+      <li><strong>Ne publiez jamais votre clé</strong> (dépôt Git, capture d'écran, ticket). En cas de doute : <code>/webhook rotate</code>.</li>
+    </ul>
 
     <h2 id="permissions">Permissions requises</h2>
     <p>Pour fonctionner pleinement, Protector a besoin des permissions de modération (gérer les salons, les rôles, les messages, expulser, bannir, voir le journal d'audit, gérer les webhooks). Le plus important : <strong>son rôle doit être tout en haut</strong> de la hiérarchie. Discord ne permet jamais à un rôle d'agir sur un rôle situé plus haut — c'est la cause n°1 des « action impossible ».</p>
