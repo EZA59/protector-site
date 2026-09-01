@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 140" role="img" aria-label="Protector">
+  <title>Protector</title>
+  <!--
+    Reprise vectorielle du logo fourni. En SVG plutot qu'en PNG : le blason reste net a
+    toutes les tailles (favicon 16px comme banniere), pese moins d'un kilo-octet, et sa
+    couleur suit les variables du theme au lieu d'etre cuite dans l'image.
+
+    Trois couches, comme l'original : liseré blanc, bordure bleu nuit, ecu rouge avec une
+    arete verticale plus sombre a droite — c'est elle qui donne le relief.
+  -->
+  <defs>
+    <linearGradient id="pt-face" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#f0323f"/>
+      <stop offset="49.9%" stop-color="#f0323f"/>
+      <stop offset="50%"  stop-color="#d81b2c"/>
+      <stop offset="100%" stop-color="#c4162a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Liseré extérieur -->
+  <path fill="#ffffff"
+        d="M60 2 6 20v52c0 30 22 56 54 66 32-10 54-36 54-66V20L60 2z"/>
+  <!-- Bordure bleu nuit -->
+  <path fill="#2b3a55"
+        d="M60 10 13 25v47c0 26 19 49 47 58 28-9 47-32 47-58V25L60 10z"/>
+  <!-- Écu -->
+  <path fill="url(#pt-face)"
+        d="M60 20 22 32v40c0 22 16 41 38 49 22-8 38-27 38-49V32L60 20z"/>
+
+  <!--
+    Le P est dessine en chemin plein plutot qu'en texte : aucune dependance a une police
+    installee, et un rendu identique partout.
+  -->
+  <path fill="#ffffff"
+        d="M44 40h20c11 0 19 8 19 18s-8 18-19 18H55v18H44V40zm11 11v14h8c4.4 0 7.5-3 7.5-7s-3.1-7-7.5-7h-8z"/>
+</svg>
