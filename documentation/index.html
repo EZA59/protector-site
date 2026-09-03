@@ -57,6 +57,7 @@
         <li><a href="#backup">Sauvegarde &amp; restauration</a></li>
         <li><a href="#reseau">Blacklist réseau &amp; appels</a></li>
         <li><a href="#premium">Premium &amp; Premium Plus</a></li>
+        <li><a href="#multiserveurs">Multi-serveurs</a></li>
         <li><a href="#webhook">Webhook sortant</a></li>
         <li><a href="#permissions">Permissions requises</a></li>
         <li><a href="#commandes">Liste des commandes</a></li>
@@ -136,10 +137,62 @@
     <p>Tous les systèmes ci-dessus sont <strong>gratuits</strong>. Le premium ajoute des analyses en plus :</p>
     <table>
       <tr><th>Palier</th><th>Ce qu'il ajoute</th></tr>
-      <tr><td><strong>Premium</strong></td><td>Modération par IA sur les messages <em>signalés</em> (juge le contexte : haine codée, contournements, sarcasme) et analyse NSFW contextuelle plus fine.</td></tr>
+      <tr><td><strong>Premium</strong></td><td>Modération par IA sur les messages <em>signalés</em> (juge le contexte : haine codée, contournements, sarcasme), analyse NSFW contextuelle plus fine, <a href="#multiserveurs">réseau multi-serveurs</a>, rôles temporaires, personnalisation des embeds et giveaways illimités.</td></tr>
       <tr><td><strong>Premium&nbsp;Plus</strong></td><td>Analyse en <strong>temps réel</strong> de chaque message (menaces, haine, toxicité sévère) avec action automatique, et plus de slots de sauvegarde.</td></tr>
     </table>
+    <p>Dans <code>/config</code>, un module réservé à une offre reste <strong>affiché</strong> avec une étoile et un cadenas — vous voyez ce que l'offre apporte — mais il n'apparaît pas dans le menu de configuration&nbsp;: le régler sans effet donnerait l'illusion d'une protection active. Ses avantages s'arrêtent dès la fin de l'abonnement, sans que la configuration soit perdue.</p>
     <p>Le premium s'obtient via l'abonnement Discord. L'analyse par un service tiers (utilisée par ces options) reste activable par l'administrateur et est décrite dans la <a href="../privacy/">politique de confidentialité</a>.</p>
+
+
+    <h2 id="multiserveurs">Multi-serveurs <span class="tag">Premium</span></h2>
+    <p>Reliez plusieurs serveurs <strong>que vous possédez</strong> en un seul réseau. Un serveur <strong>principal</strong> porte l'abonnement et la configuration&nbsp;; les serveurs <strong>liés</strong> n'ont besoin de rien.</p>
+
+    <h3>Qui peut lier quoi</h3>
+    <p>Seuls des serveurs dont vous êtes <strong>déjà propriétaire</strong> peuvent être reliés, et seul le <strong>propriétaire</strong> du serveur principal peut modifier le réseau.</p>
+    <p>Cette contrainte n'est pas une limitation administrative&nbsp;: relier un serveur donne le pouvoir d'y bannir et d'y faire circuler des messages. La restreindre à vos propres serveurs garantit qu'elle ne vous accorde <strong>aucun pouvoir que vous n'ayez déjà</strong>. La condition est revérifiée à chaque bannissement, car un serveur peut changer de propriétaire après avoir été relié.</p>
+    <p>Un serveur ne peut appartenir qu'à <strong>un seul réseau</strong>, et un réseau compte au maximum <strong>9 serveurs liés</strong> en plus du principal.</p>
+
+    <h3>Mise en place</h3>
+    <p>Sur le serveur qui sera le principal&nbsp;: <code>/config</code> → <strong>Multi-serveurs</strong>. Le menu ne propose que vos serveurs éligibles, <strong>par leur nom</strong>&nbsp;: rien à copier, aucun identifiant à saisir.</p>
+    <table>
+      <tr><th>Réglage</th><th>Effet</th></tr>
+      <tr><td>Module activé</td><td>Active le réseau sur ce serveur.</td></tr>
+      <tr><td>Suivre les bannissements du réseau</td><td>Ce serveur applique les bannissements décidés ailleurs dans le réseau.</td></tr>
+      <tr><td>Remonter les journaux</td><td>Ce serveur envoie ses entrées de journal au serveur principal.</td></tr>
+    </table>
+
+    <h3>Bannissements partagés</h3>
+    <p>Bannir quelqu'un sur un serveur du réseau le bannit sur tous les autres, <strong>par le bot</strong>. Seuls les <strong>bannissements</strong> circulent&nbsp;: un mute ou un avertissement restent locaux, car les propager reviendrait à punir ailleurs quelqu'un qui n'y a rien fait.</p>
+    <p>La propagation n'a lieu que si le bannissement a <strong>réussi</strong> à la source&nbsp;: un ban impossible localement ne déclenche rien ailleurs.</p>
+
+    <h3>Journaux remontés</h3>
+    <p>Choisissez sur le serveur principal le salon qui reçoit les journaux du réseau. Les entrées y arrivent <strong>par webhook Discord</strong>, jamais par le bot lui-même&nbsp;: c'est ce qui permet d'afficher chaque ligne <strong>au nom du serveur d'origine</strong>, et donc de savoir d'un coup d'œil d'où elle vient.</p>
+    <p>Protector a besoin de <strong>Gérer les webhooks</strong> dans ce salon.</p>
+
+    <h3>Salons partagés</h3>
+    <p>Un salon partagé recopie les messages d'un serveur à l'autre. Le message relayé porte le <strong>nom et l'avatar de son auteur</strong>, pas ceux du bot&nbsp;: une conversation reste lisible.</p>
+    <p>Chaque salon du pont a son propre sens de circulation&nbsp;:</p>
+    <table>
+      <tr><th>Sens</th><th>Comportement</th></tr>
+      <tr><td>↔️ Dans les deux sens</td><td>Émet et reçoit.</td></tr>
+      <tr><td>➡️ Émet seulement</td><td>Ce qui s'y écrit part ailleurs&nbsp;; rien n'y arrive.</td></tr>
+      <tr><td>⬅️ Reçoit seulement</td><td>Reçoit les messages des autres&nbsp;; ce qui s'y écrit ne part pas.</td></tr>
+    </table>
+    <p>Un salon en <em>émission seule</em> sur le serveur principal et en <em>réception seule</em> ailleurs produit une <strong>annonce descendante</strong>&nbsp;: le message arrive partout, sans que personne puisse répondre en retour.</p>
+
+    <h3>Ce qui ne traverse pas</h3>
+    <ul>
+      <li>Les messages <strong>supprimés par la modération</strong>&nbsp;: le relais a lieu après les filtres, pour ne pas propager ce qui vient d'être retiré.</li>
+      <li>Les <strong>mentions</strong>&nbsp;: aucune ne se déclenche à l'arrivée. Un pont ne doit pas devenir un moyen de faire sonner <code>@everyone</code> là où on n'en a pas le droit.</li>
+      <li>Les <strong>fichiers</strong>&nbsp;: leur nom est signalé, pas leur contenu. Protector n'archive aucun fichier, et un lien Discord expire avec son message.</li>
+      <li>Les messages des <strong>bots et des webhooks</strong>&nbsp;: sans cela, deux salons pontés se renverraient le même message indéfiniment.</li>
+    </ul>
+
+    <h3>Si Protector est retiré d'un serveur lié</h3>
+    <p>Le <strong>propriétaire du serveur principal est prévenu</strong>, en message privé et dans son salon de journaux, avec la liste des salons partagés touchés. Le lien est retiré automatiquement&nbsp;: réinstallez Protector sur ce serveur puis reliez-le à nouveau pour rétablir le réseau.</p>
+
+    <h3>Fin d'abonnement</h3>
+    <p>Le réseau cesse de fonctionner si le serveur principal n'est plus Premium&nbsp;: plus de propagation, plus de remontée de journaux, plus de relais. La configuration est <strong>conservée</strong> et reprend telle quelle au renouvellement.</p>
 
 
     <h2 id="webhook">Webhook sortant <span class="tag">Premium Plus</span></h2>
