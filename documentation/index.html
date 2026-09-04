@@ -125,7 +125,33 @@
     <p>Clic droit sur un message → <strong>Signaler le message</strong> : un formulaire envoie le message au salon de signalements du serveur, où le staff peut sanctionner ou ignorer. Clic droit sur un membre → <strong>Signaler l'utilisateur</strong> : un rapport (raison, liens, images) est envoyé à l'équipe Protector, qui peut l'examiner sans rejoindre ton serveur.</p>
 
     <h2 id="logs">Journal d'évènements</h2>
-    <p>Désactivé par défaut. Une fois activé, tu choisis les catégories à journaliser (messages, membres, modération, rôles, salons, serveur, vocal) et un salon par défaut ; chaque catégorie peut avoir son propre salon. Les logs sont envoyés via un webhook propre à chaque salon, détaillés (auteur, contenu du changement, permissions d'un salon créé, etc.).</p>
+    <p>Désactivé par défaut. Une fois activé, tu choisis les catégories à journaliser et un salon par défaut&nbsp;; chaque catégorie peut avoir son propre salon. Les logs sont envoyés via un <strong>webhook propre à chaque salon</strong>, au nom de la catégorie.</p>
+
+    <h3>Ce que chaque catégorie enregistre</h3>
+    <table>
+      <tr><th>Catégorie</th><th>Évènements</th></tr>
+      <tr><td>Messages</td><td>Suppression (avec <strong>qui</strong> l'a supprimé&nbsp;: un modérateur ou l'auteur lui-même), édition avec avant/après, pièces jointes et autocollants conservés.</td></tr>
+      <tr><td>Membres</td><td>Arrivée et départ, pseudo modifié, type de compte, âge du compte (avec un avertissement en dessous de 7 jours), effectif du serveur.</td></tr>
+      <tr><td>Modération</td><td>Bannissement, débannissement, et <strong>exclusion temporaire</strong> avec sa durée, son auteur et sa raison.</td></tr>
+      <tr><td>Rôles</td><td>Rôle créé, supprimé, modifié&nbsp;; rôles donnés ou retirés à un membre. Les permissions sont écrites <strong>en toutes lettres</strong>, jamais sous leur nom technique.</td></tr>
+      <tr><td>Salons</td><td>Création, suppression, et toute modification&nbsp;: nom, sujet, catégorie, mode lent, position, qualité audio, région vocale, archivage des fils… et surtout les <strong>permissions du salon</strong>, détaillées par rôle et par membre.</td></tr>
+      <tr><td>Serveur</td><td>Nom, description, icône, bannière, invitation personnalisée, <strong>changement de propriétaire</strong>, niveau de vérification, filtre de contenu, salons système / règles / alertes, langue, niveau de boost, fonctionnalités Discord activées ou retirées.</td></tr>
+      <tr><td>Vocal</td><td>Connexion, déconnexion, déplacement, micro coupé <strong>par le serveur</strong>, sourdine, partage d'écran et caméra.</td></tr>
+    </table>
+    <p>Couper son propre micro n'est volontairement <strong>pas</strong> journalisé&nbsp;: un membre le fait plusieurs fois par minute, et noyer les vraies sanctions sous ce bruit ne protège personne.</p>
+
+    <h3>Comment lire un log de modification</h3>
+    <p>Chaque changement s'écrit <strong>avant → après</strong>. C'est ce qui permet de vérifier&nbsp;: un log qui n'afficherait que la valeur actuelle ressemblerait à un évènement inventé, puisque c'est exactement ce que vous avez sous les yeux en ouvrant votre serveur.</p>
+    <p>Le champ <strong>Par</strong> est toujours présent, et distingue trois situations&nbsp;:</p>
+    <ul>
+      <li><strong>Un membre est nommé</strong> — c'est lui qui a fait la modification.</li>
+      <li><strong>«&nbsp;Permission manquante&nbsp;»</strong> — le bot n'a pas le droit <em>Voir le journal des modifications</em>. Accordez-le lui pour obtenir les auteurs.</li>
+      <li><strong>«&nbsp;Non attribuable&nbsp;»</strong> — Discord n'a écrit aucune entrée d'audit. C'est le cas des modifications faites par Discord lui-même.</li>
+    </ul>
+    <p>Une réécriture qui ne change que des espaces n'est pas considérée comme une modification&nbsp;: certains bots republient périodiquement la même description, ce qui produisait auparavant un log sans rien de modifié.</p>
+
+    <h3>Valeurs Discord traduites</h3>
+    <p>Aucun nom technique n'apparaît dans les logs. <code>ManageGuildExpressions</code> s'écrit «&nbsp;Gérer les émojis et les autocollants&nbsp;», un niveau de vérification <code>3</code> s'écrit «&nbsp;Élevée — membre du serveur depuis plus de 10 minutes&nbsp;». Les 49 permissions Discord, les niveaux de vérification, le filtre de contenu explicite, les notifications par défaut, la double authentification et la classification du serveur sont traduits en français, anglais et espagnol.</p>
 
     <h2 id="backup">Sauvegarde &amp; restauration</h2>
     <p>Réservé au propriétaire, et indépendant des sauvegardes internes de l'anti-nuke. <code>/backup create</code> capture la structure complète (rôles, salons, permissions, derniers messages texte). <code>/backup list</code> et <code>/backup delete</code> gèrent tes sauvegardes. <code>/restore</code> affiche le contenu d'une sauvegarde, te laisse choisir de restaurer ou non les messages, puis restaure. Une sauvegarde automatique est créée à l'arrivée du bot.</p>
