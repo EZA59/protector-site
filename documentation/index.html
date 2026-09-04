@@ -171,6 +171,15 @@
 
     <h3>Salons partagés</h3>
     <p>Un salon partagé recopie les messages d'un serveur à l'autre. Le message relayé porte le <strong>nom et l'avatar de son auteur</strong>, pas ceux du bot&nbsp;: une conversation reste lisible.</p>
+    <h4>Ajouter un salon d'un AUTRE serveur</h4>
+    <p>Tout se fait depuis le serveur principal, en deux menus&nbsp;: choisissez d'abord <strong>le serveur</strong> du réseau, puis <strong>son salon</strong>. Le sélecteur de salon natif de Discord ne liste que les salons du serveur affiché&nbsp;; la liste proposée ici vient du bot, et couvre donc tous les serveurs du réseau.</p>
+    <p>Le serveur choisi reste sélectionné après un ajout&nbsp;: on enchaîne plusieurs salons du même serveur sans revenir en arrière.</p>
+
+    <h4>Mentions</h4>
+    <p><strong>Aucune mention ne traverse un pont.</strong> Rôles, <code>@everyone</code>, <code>@here</code>, membres et salons sont neutralisés dans le texte relayé, en plus du refus au niveau de l'API Discord.</p>
+    <p>Les deux protections sont nécessaires&nbsp;: le refus API empêche la <em>notification</em>, mais un <code>&lt;@&amp;role&gt;</code> resterait <em>affiché</em> comme une vraie mention de rôle — de quoi faire passer un message ordinaire pour une annonce officielle sur un serveur où son auteur n'a jamais eu ce droit.</p>
+    <p>Le texte reste lisible&nbsp;: <code>@everyone</code> s'affiche toujours «&nbsp;@everyone&nbsp;», il n'est simplement plus interprété. Le caractère inséré est invisible.</p>
+
     <p>Chaque salon du pont a son propre sens de circulation&nbsp;:</p>
     <table>
       <tr><th>Sens</th><th>Comportement</th></tr>
@@ -183,7 +192,7 @@
     <h3>Ce qui ne traverse pas</h3>
     <ul>
       <li>Les messages <strong>supprimés par la modération</strong>&nbsp;: le relais a lieu après les filtres, pour ne pas propager ce qui vient d'être retiré.</li>
-      <li>Les <strong>mentions</strong>&nbsp;: aucune ne se déclenche à l'arrivée. Un pont ne doit pas devenir un moyen de faire sonner <code>@everyone</code> là où on n'en a pas le droit.</li>
+      <li>Les <strong>mentions</strong>&nbsp;: neutralisées dans le texte ET refusées par l'API. Un pont ne doit pas devenir un moyen de faire sonner <code>@everyone</code> là où on n'en a pas le droit.</li>
       <li>Les <strong>fichiers</strong>&nbsp;: leur nom est signalé, pas leur contenu. Protector n'archive aucun fichier, et un lien Discord expire avec son message.</li>
       <li>Les messages des <strong>bots et des webhooks</strong>&nbsp;: sans cela, deux salons pontés se renverraient le même message indéfiniment.</li>
     </ul>
