@@ -130,7 +130,7 @@
     <h3>Ce que chaque catégorie enregistre</h3>
     <table>
       <tr><th>Catégorie</th><th>Évènements</th></tr>
-      <tr><td>Messages</td><td>Suppression (avec <strong>qui</strong> l'a supprimé&nbsp;: un modérateur ou l'auteur lui-même), édition avec avant/après, pièces jointes et autocollants conservés.</td></tr>
+      <tr><td>Messages</td><td>Suppression (avec <strong>qui</strong> l'a supprimé), <strong>purge</strong> de plusieurs messages d'un coup, édition avec avant/après, pièces jointes et autocollants conservés.</td></tr>
       <tr><td>Membres</td><td>Arrivée et départ, pseudo modifié, type de compte, âge du compte (avec un avertissement en dessous de 7 jours), effectif du serveur.</td></tr>
       <tr><td>Modération</td><td>Bannissement, débannissement, et <strong>exclusion temporaire</strong> avec sa durée, son auteur et sa raison.</td></tr>
       <tr><td>Rôles</td><td>Rôle créé, supprimé, modifié&nbsp;; rôles donnés ou retirés à un membre. Les permissions sont écrites <strong>en toutes lettres</strong>, jamais sous leur nom technique.</td></tr>
@@ -149,6 +149,15 @@
       <li><strong>«&nbsp;Non attribuable&nbsp;»</strong> — Discord n'a écrit aucune entrée d'audit. C'est le cas des modifications faites par Discord lui-même.</li>
     </ul>
     <p>Une réécriture qui ne change que des espaces n'est pas considérée comme une modification&nbsp;: certains bots republient périodiquement la même description, ce qui produisait auparavant un log sans rien de modifié.</p>
+
+    <h3>Qui a supprimé un message</h3>
+    <p>Trois réponses possibles, dans cet ordre&nbsp;:</p>
+    <ul>
+      <li><strong>Protector, avec le motif</strong> — «&nbsp;Protector — Anti-spam&nbsp;», «&nbsp;Protector — Filtre de mots&nbsp;». Le bot note ses propres suppressions au lieu de les redemander à Discord&nbsp;: c'est exact, et le motif n'existe dans aucun journal d'audit.</li>
+      <li><strong>Un membre nommé</strong> — la suppression vient du journal d'audit Discord.</li>
+      <li><strong>«&nbsp;Aucune trace — vraisemblablement l'auteur lui-même&nbsp;»</strong> — Discord n'a rien écrit. C'est très probablement l'auteur, mais ce n'est <em>pas</em> une certitude, et le log ne prétend pas le contraire.</li>
+    </ul>
+    <p>Discord n'écrit pas une entrée d'audit par suppression&nbsp;: il regroupe les suppressions d'un même modérateur dans un même salon et incrémente un compteur, en conservant la date de la première. C'est pour cette raison qu'une attribution fondée sur la seule fraîcheur d'une entrée se trompe dès la deuxième suppression.</p>
 
     <h3>Valeurs Discord traduites</h3>
     <p>Aucun nom technique n'apparaît dans les logs. <code>ManageGuildExpressions</code> s'écrit «&nbsp;Gérer les émojis et les autocollants&nbsp;», un niveau de vérification <code>3</code> s'écrit «&nbsp;Élevée — membre du serveur depuis plus de 10 minutes&nbsp;». Les 49 permissions Discord, les niveaux de vérification, le filtre de contenu explicite, les notifications par défaut, la double authentification et la classification du serveur sont traduits en français, anglais et espagnol.</p>
