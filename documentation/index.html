@@ -118,7 +118,7 @@
     <p>À chaque arrivée, Protector calcule une note de 0 à 100 en combinant l'âge du compte, la réputation réseau (déjà blacklisté ailleurs ?), l'avatar par défaut et la ressemblance pseudo/avatar avec des raiders connus. Le badge est journalisé ; une action automatique au-delà d'un score élevé est possible (désactivée par défaut).</p>
 
     <h3>Surveillance du staff</h3>
-    <p>Quand un rôle à permissions sensibles est attribué à un compte jugé à risque (trop récent, présent depuis peu), Protector alerte le propriétaire et retire le rôle si possible.</p>
+    <p>Quand un rôle à permissions sensibles est attribué à un compte jugé à risque (trop récent, présent depuis peu), Protector alerte le propriétaire et retire le rôle si possible. Le rôle de quarantaine de la vérification fait exception : il n'est jamais retiré.</p>
 
     <h2 id="verification">Vérification</h2>
     <p>Les nouveaux membres sont mis en <strong>quarantaine</strong> : ils ne voient que le salon de vérification. Deux modes au choix dans <code>/config → Vérification</code> :</p>
@@ -128,6 +128,7 @@
     </ul>
     <p>Tu peux aussi définir un <strong>rôle ajouté automatiquement après la vérification</strong>. Mise en place : <code>/verification-setup role:&lt;rôle de quarantaine&gt; channel:&lt;salon de vérif&gt;</code>.</p>
     <p>Si le message au bouton « Vérifier » est supprimé, il <strong>revient tout seul</strong> à l'arrivée du membre suivant&nbsp;; tu peux aussi le republier depuis <code>/config → Vérification</code>. Les <strong>rôles donnés par d'autres bots</strong> (rôles automatiques, rôles « collants ») à un membre pas encore vérifié lui sont retirés, puis rendus dès qu'il se vérifie. Un rôle donné à la main par le staff n'est pas touché.</p>
+    <p>Le rôle de quarantaine créé par <code>/autoconfig</code> ne porte <strong>aucune permission</strong> et ne voit que le salon de vérification. Après <code>/autoconfig</code> ou <code>/verification-setup</code>, Protector vérifie ce que ce rôle voit réellement, salon par salon, et nomme tout salon resté visible. La surveillance du staff ne lui retire jamais ce rôle : c'est lui qui retient les nouveaux arrivants.</p>
 
     <h2 id="moderation">Modération &amp; casier</h2>
     <p>Commandes classiques : <code>/warn</code>, <code>/mute</code>, <code>/kick</code>, <code>/ban</code>, <code>/unmute</code>, <code>/unban</code>, <code>/tempban</code>. Chaque sanction est enregistrée dans un <strong>casier par serveur</strong>, consultable avec <code>/history</code>. Les sanctions faites en dehors du bot (via le journal d'audit Discord) sont aussi captées. <code>/lockdown</code> et <code>/unlock</code> verrouillent/déverrouillent tout le serveur en cas d'urgence.</p>
