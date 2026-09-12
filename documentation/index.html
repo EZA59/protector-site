@@ -79,20 +79,29 @@
 
     <h2 id="config">Configuration</h2>
     <p>La commande <code>/config</code> ouvre un panneau interactif (un seul message, privé). Chaque module a un bouton pour l'activer/désactiver, des formulaires pour les seuils et durées, et des menus pour choisir les salons et rôles. Tout est enregistré instantanément, serveur par serveur.</p>
-    <p>Le bouton <strong>🌐 Langue</strong> change la langue du serveur (français ou anglais). La commande <code>/informations</code> bascule la langue rien que pour toi, le temps de lire.</p>
+    <p>Le bouton <strong>🌐 Langue</strong> change la langue du serveur (français, anglais ou espagnol). La commande <code>/informations</code> bascule la langue rien que pour toi, le temps de lire.</p>
     <div class="note">⚠️ Seuls les membres ayant la permission <strong>Gérer le serveur</strong> peuvent ouvrir et modifier la configuration.</div>
 
     <h2 id="protection">Systèmes de protection</h2>
 
     <h3>Anti-raid</h3>
     <p>Détecte un afflux anormal d'arrivées sur une courte période et passe le serveur en <strong>lockdown</strong> : il élève le niveau de vérification et expulse ou bannit les comptes trop récents pendant la durée du raid. Réglable : seuil et fenêtre d'arrivées, âge minimum du compte, action, durée.</p>
+    <p>Le lockdown est enregistré&nbsp;: un redémarrage du bot ne l'interrompt pas. À la fin, le niveau de vérification d'origine est remis — sauf si le staff l'a changé entre-temps, auquel cas son choix est respecté.</p>
 
     <h3>Anti-spam</h3>
-    <p>Bloque le flood, les messages identiques répétés, les mentions de masse et les liens d'invitation. Il gère aussi les <strong>applications ajoutées à un profil</strong> (apps utilisateur) : en cas de spam, l'auteur est expulsé, l'app bannie si possible et les messages supprimés. Un spam du même message dans plusieurs salons alerte aussi l'équipe Protector.</p>
+    <p>Bloque le flood, les messages identiques répétés, les mentions de masse et les liens d'invitation. Il gère aussi les <strong>applications ajoutées à un profil</strong> (apps utilisateur) : en cas de spam, l'auteur est expulsé, l'app bannie si possible et les messages supprimés. Un spam du même message dans plusieurs salons alerte aussi l'équipe Protector. Si l'auteur d'un spam de mentions (@everyone, mentions de masse) ne peut pas être rendu muet, faute de permission ou parce que le rôle de Protector est trop bas, le propriétaire est prévenu en privé.</p>
 
     <h3>Anti-nuke &amp; restauration</h3>
     <p>Si un membre ou un bot enchaîne des <strong>actions destructrices en masse</strong> (suppression de salons/rôles, bans en rafale, webhooks), Protector le neutralise, prévient le propriétaire, puis <strong>restaure</strong> la structure depuis une sauvegarde récente : salons, rôles, permissions, positions, nom et icône, et il relie automatiquement ta configuration aux salons recréés.</p>
-    <p>La sanction est <strong>graduée</strong> pour les humains : une blacklist globale n'est appliquée qu'au-delà d'un certain nombre d'actions destructrices. En-dessous, c'est une sanction locale et une restauration. Un bot raideur, lui, est toujours blacklisté.</p>
+    <p>Les attaques <strong>qui ne suppriment rien</strong> sont comptées aussi&nbsp;:</p>
+    <ul>
+      <li><strong>Élagage</strong> — il vaut autant d'expulsions que de membres retirés. Réserve-le au propriétaire ou au rôle exempté de l'anti-nuke.</li>
+      <li><strong>@everyone qui reçoit Administrateur, Bannir, Gérer les rôles…</strong> — Protector réagit dès la première fois et retire ces pouvoirs.</li>
+      <li><strong>Salons privés ouverts à tous</strong> — chacun compte, et Protector les referme.</li>
+      <li><strong>Lien d'invitation personnalisé changé ou retiré</strong> — le propriétaire est prévenu aussitôt en privé, pour le reprendre avant qu'un autre serveur ne le réserve.</li>
+    </ul>
+    <p><strong>Salons privés et 16 novembre 2026.</strong> À cette date, Discord cesse de donner aux bots le nom et les permissions des salons qu'ils ne voient pas. Protector enregistre l'état de chaque salon au fil de l'eau&nbsp;: après un nuke, un salon privé est recréé avec le nom et les permissions qu'il lui connaissait, et non avec ceux, factices, que Discord affichera. Un salon dont il n'a jamais connu les permissions n'est pas recréé de travers&nbsp;: le récapitulatif le signale.</p>
+    <p>La sanction est <strong>graduée</strong> pour les humains : une blacklist globale n'est appliquée qu'au-delà d'un certain nombre d'actions destructrices. En-dessous, c'est une sanction locale et une restauration. Un bot raideur, lui, est toujours blacklisté. Un humain qui n'a rien supprimé — seulement les actions ci-dessus — est neutralisé sur le serveur, sans blacklist globale.</p>
 
     <h3>Anti-phishing, anti-webhook, anti-bot</h3>
     <ul>
@@ -117,6 +126,7 @@
       <li><strong>Captcha image</strong> — à l'arrivée, un captcha est posté avec la mention du membre. Il recopie le code dans le salon ; bon code, son message et celui du bot sont supprimés et l'accès est débloqué.</li>
     </ul>
     <p>Tu peux aussi définir un <strong>rôle ajouté automatiquement après la vérification</strong>. Mise en place : <code>/verification-setup role:&lt;rôle de quarantaine&gt; channel:&lt;salon de vérif&gt;</code>.</p>
+    <p>Si le message au bouton « Vérifier » est supprimé, il <strong>revient tout seul</strong> à l'arrivée du membre suivant&nbsp;; tu peux aussi le republier depuis <code>/config → Vérification</code>. Les <strong>rôles donnés par d'autres bots</strong> (rôles automatiques, rôles « collants ») à un membre pas encore vérifié lui sont retirés, puis rendus dès qu'il se vérifie. Un rôle donné à la main par le staff n'est pas touché.</p>
 
     <h2 id="moderation">Modération &amp; casier</h2>
     <p>Commandes classiques : <code>/warn</code>, <code>/mute</code>, <code>/kick</code>, <code>/ban</code>, <code>/unmute</code>, <code>/unban</code>, <code>/tempban</code>. Chaque sanction est enregistrée dans un <strong>casier par serveur</strong>, consultable avec <code>/history</code>. Les sanctions faites en dehors du bot (via le journal d'audit Discord) sont aussi captées. <code>/lockdown</code> et <code>/unlock</code> verrouillent/déverrouillent tout le serveur en cas d'urgence.</p>
@@ -137,6 +147,12 @@
       <tr><td>Salons</td><td>Création, suppression, et toute modification&nbsp;: nom, sujet, catégorie, mode lent, position, qualité audio, région vocale, archivage des fils… et surtout les <strong>permissions du salon</strong>, détaillées par rôle et par membre.</td></tr>
       <tr><td>Serveur</td><td>Nom, description, icône, bannière, invitation personnalisée, <strong>changement de propriétaire</strong>, niveau de vérification, filtre de contenu, salons système / règles / alertes, langue, niveau de boost, fonctionnalités Discord activées ou retirées.</td></tr>
       <tr><td>Vocal</td><td>Connexion, déconnexion, déplacement, micro coupé <strong>par le serveur</strong>, sourdine, partage d'écran et caméra.</td></tr>
+      <tr><td>Fils</td><td>Fils et publications de forum créés (salon, créateur, étiquettes), modifiés (renommés, archivés, verrouillés, mode lent…) et supprimés. L'archivage automatique d'un fil inactif n'encombre pas le journal.</td></tr>
+      <tr><td>Invitations</td><td>Invitation créée (durée de validité, nombre d'utilisations) et supprimée, avec son auteur — ou expirée.</td></tr>
+      <tr><td>AutoMod</td><td>Chaque intervention de l'AutoMod de Discord en une seule entrée (contenu bloqué, règle, déclencheur, actions), et chaque modification de ses règles&nbsp;: une règle désactivée ou un rôle exempté en douce se voit.</td></tr>
+      <tr><td>Emojis et autocollants</td><td>Emojis, autocollants et sons créés, modifiés et supprimés, avec leur auteur.</td></tr>
+      <tr><td>Évènements</td><td>Évènements programmés créés, modifiés et supprimés, avec leur auteur.</td></tr>
+      <tr><td>Webhooks</td><td>Webhooks créés, modifiés et supprimés, avec leur auteur&nbsp;: un webhook créé par un compte compromis pour spammer apparaît immédiatement.</td></tr>
     </table>
     <p>Couper son propre micro n'est volontairement <strong>pas</strong> journalisé&nbsp;: un membre le fait plusieurs fois par minute, et noyer les vraies sanctions sous ce bruit ne protège personne.</p>
 
@@ -166,7 +182,7 @@
     <p>Réservé au propriétaire, et indépendant des sauvegardes internes de l'anti-nuke. <code>/backup create</code> capture la structure complète (rôles, salons, permissions, derniers messages texte). <code>/backup list</code> et <code>/backup delete</code> gèrent tes sauvegardes. <code>/restore</code> affiche le contenu d'une sauvegarde, te laisse choisir de restaurer ou non les messages, puis restaure. Une sauvegarde automatique est créée à l'arrivée du bot.</p>
 
     <h2 id="reseau">Blacklist réseau &amp; appels</h2>
-    <p>Quand un utilisateur atteint un niveau d'infraction très élevé (ou lors d'un nuke confirmé), il est <strong>blacklisté globalement</strong> : banni de tous les serveurs que Protector protège, et bloqué s'il tente d'en rejoindre un. Il est prévenu en MP au préalable. La commande <code>/appeal</code> lui permet de <strong>contester</strong> ; l'équipe Protector approuve (levée de la blacklist) ou refuse. Le pouvoir de blacklist est réservé à l'équipe Protector — les administrateurs de serveur n'y ont pas accès.</p>
+    <p>Quand un utilisateur atteint un niveau d'infraction très élevé (ou lors d'un nuke confirmé), il est <strong>blacklisté globalement</strong> : banni de tous les serveurs que Protector protège — sauf le serveur support, où il peut faire appel —, et bloqué s'il tente d'en rejoindre un. Il est prévenu en MP au préalable. La commande <code>/appeal</code> lui permet de <strong>contester</strong> ; l'équipe Protector approuve (levée de la blacklist) ou refuse. Le pouvoir de blacklist est réservé à l'équipe Protector — les administrateurs de serveur n'y ont pas accès.</p>
 
     <h2 id="premium">Premium &amp; Premium Plus</h2>
     <p>Tous les systèmes ci-dessus sont <strong>gratuits</strong>. Le premium ajoute des analyses en plus :</p>
@@ -379,9 +395,11 @@ def protector():
     <p>Une protection peut être <strong>activée et pourtant inerte</strong> si la permission dont elle a besoin manque. Le cas le plus grave : l'anti-nuke sans <em>Voir le journal d'audit</em>. Discord n'envoie alors aucun évènement d'audit, donc rien n'est détecté — et sans diagnostic, personne ne s'en aperçoit avant l'attaque.</p>
     <p><code>/diagnostic</code> affiche, module par module, ce qui fonctionne, ce qui est dégradé et ce qui est hors service, en nommant à chaque fois la permission exacte qui manque. Seuls les modules que vous avez <strong>activés</strong> sont évalués.</p>
     <p>La <strong>hiérarchie</strong> est vérifiée au même titre qu'une permission : un rôle placé trop bas rend « Gérer les rôles » inopérant, Discord refusant l'action. Si une protection est réellement hors service, le propriétaire est prévenu en privé — une seule fois, tant que la situation ne change pas.</p>
+    <p><strong>Pendant une attaque</strong>, si une contre-mesure échoue faute de permission ou parce que le rôle de Protector est trop bas — expulser les comptes d'un raid, neutraliser l'auteur d'un nuke, restaurer le serveur, retirer les pouvoirs donnés à @everyone, rendre muets les participants d'un raid ou l'auteur d'un spam de mentions, supprimer un webhook malveillant, écarter un compte blacklisté —, le propriétaire reçoit <strong>aussitôt</strong> un message privé&nbsp;: ce qui a échoué, et la permission à accorder. Un seul message par attaque&nbsp;; si ses messages privés sont fermés, il est mentionné dans le salon de logs.</p>
     <div class="note">
       <p><strong>Protector ne demande jamais Administrateur.</strong> Chaque module déclare uniquement les permissions dont il se sert.</p>
       <p>Pour les <strong>salons privés</strong> que le bot ne voit pas : leurs métadonnées lui sont inconnues, il ne saura donc pas les recréer à l'identique après un nuke. La permission <em>Voir le salon</em> corrige cela, mais elle donne aussi accès au contenu et à l'historique. C'est un choix à faire salon par salon, en connaissance de cause.</p>
+      <p>Avant le <strong>16 novembre 2026</strong>, date à laquelle Discord masque ces salons aux bots, le propriétaire reçoit en privé la liste des salons que Protector ne voit pas, puis un rappel deux semaines avant — si l'anti-nuke et sa restauration sont activés.</p>
     </div>
 
     <h2 id="langues">Langues</h2>
@@ -395,8 +413,10 @@ def protector():
     <p>Le rôle de Protector n'est pas assez haut. Place-le tout en haut de la liste des rôles et donne-lui les permissions de modération.</p>
     <h3>La restauration récupère-t-elle les messages ?</h3>
     <p>Elle peut recréer les derniers messages texte des salons (via webhook), si l'option est activée. Les autres contenus ne sont pas conservés.</p>
+    <h3>Que change le 16 novembre 2026 pour mes salons privés ?</h3>
+    <p>Discord cessera de donner aux bots le nom et les permissions des salons qu'ils ne voient pas. Protector garde ce qu'il en sait déjà et s'en sert pour restaurer ces salons après un nuke. En revanche, il ne verra plus les modifications faites ensuite sur ces salons, ni les nouveaux salons de ce genre. Pour qu'un salon reste restaurable à l'identique, accorde à Protector <em>Voir le salon</em> sur celui-ci — en sachant que cette permission donne aussi accès à son contenu. Les propriétaires concernés sont prévenus en privé avant l'échéance.</p>
     <h3>Mes données sont-elles en sécurité ?</h3>
-    <p>Protector ne stocke que le strict nécessaire et n'analyse les messages qu'en temps réel, sans les conserver. Détails dans la <a href="../privacy/">politique de confidentialité</a>.</p>
+    <p>Protector ne stocke que le strict nécessaire et n'analyse les messages qu'en temps réel, sans les conserver — sauf les derniers messages de chaque salon, que l'anti-nuke garde pour pouvoir les restaurer (option désactivable). Détails dans la <a href="../privacy/">politique de confidentialité</a>.</p>
   </div>
 </main>
 

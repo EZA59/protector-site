@@ -19,7 +19,7 @@
 
   <main class="section doc-body">
     <h1>Politique de confidentialité</h1>
-    <p class="updated">Dernière mise à jour : 28 juin 2026</p>
+    <p class="updated">Dernière mise à jour : 12 septembre 2026</p>
 
     <p>Cette politique explique quelles données le bot Discord <strong>Protector</strong> (« le Bot ») collecte, comment elles sont utilisées, conservées et protégées. En utilisant le Bot, vous acceptez les pratiques décrites ci-dessous.</p>
 
@@ -41,12 +41,17 @@
     <ul><li>Identifiants des membres de l'équipe et leur niveau de permission.</li></ul>
     <h3>e) Sauvegardes de structure (anti-nuke)</h3>
     <ul>
-      <li>Une copie temporaire, <strong>en mémoire vive</strong>, de la structure des salons et rôles (noms, types, catégories, positions, permissions) afin de pouvoir la restaurer après un raid. Ces sauvegardes ne sont pas écrites sur disque et sont perdues au redémarrage.</li>
-      <li>Si l'option <strong>« Restaurer les derniers messages »</strong> est activée (désactivable dans <code>/config → Anti-nuke</code>), cette sauvegarde inclut aussi, <strong>en mémoire vive uniquement</strong>, les <strong>10 derniers messages</strong> de chaque salon textuel (contenu, pseudo et avatar de l'auteur), pour les recréer via webhook si le salon est supprimé. Ces messages sont écrasés à chaque nouvelle sauvegarde (~toutes les 10 min), jamais écrits sur disque, et perdus au redémarrage.</li>
+      <li>Une copie de la <strong>structure</strong> des salons et rôles (noms, types, catégories, positions, permissions), rafraîchie environ toutes les 10 minutes et <strong>enregistrée dans la base</strong>, afin de pouvoir la restaurer après un raid, y compris après un redémarrage du Bot.</li>
+      <li>Si l'option <strong>« Restaurer les derniers messages »</strong> est activée (elle l'est par défaut, et se désactive dans <code>/config → Anti-nuke</code>), cette copie inclut aussi les <strong>10 derniers messages</strong> de chaque salon textuel (contenu, pseudo et avatar de l'auteur), pour les recréer via webhook si le salon est supprimé. Ces messages sont <strong>remplacés à chaque nouvelle capture</strong>.</li>
+      <li>L'<strong>état de chaque salon</strong> (nom, sujet, catégorie, position, permissions) et ses <strong>20 derniers états connus</strong>, pour recréer à l'identique un salon supprimé ou modifié par un attaquant, y compris lorsque Discord masque les salons privés aux bots.</li>
     </ul>
+    <h3>f) Sauvegardes demandées par le propriétaire</h3>
+    <ul><li>À l'arrivée du Bot sur un serveur, puis à chaque <code>/backup create</code>, une sauvegarde de la structure et des <strong>10 derniers messages texte</strong> de chaque salon est enregistrée. Elle est conservée jusqu'à sa suppression par le propriétaire (<code>/backup delete</code>) : deux au plus par serveur, trois pour un serveur premium.</li></ul>
+    <h3>g) Copies de sécurité de la base</h3>
+    <ul><li>Pour pouvoir récupérer les données en cas de panne, l'ensemble de la base décrite ci-dessus est <strong>copié automatiquement toutes les heures</strong>. Ces copies restent sur l'infrastructure de l'opérateur, ne sont transmises à personne, et sont <strong>supprimées au plus tard quatre semaines</strong> après leur création.</li></ul>
 
     <h2>3. Données analysées mais NON conservées</h2>
-    <p>Pour assurer la modération, le Bot <strong>analyse en temps réel</strong> le contenu des messages et des images afin de détecter spam, phishing, contenu NSFW ou propos haineux. <strong>Ce contenu n'est pas stocké</strong> : il est traité en mémoire puis écarté. Seul un court descriptif de l'infraction peut figurer dans le motif d'une sanction. L'analyse d'image est réalisée <strong>localement</strong>, sans envoi à un service tiers.</p>
+    <p>Pour assurer la modération, le Bot <strong>analyse en temps réel</strong> le contenu des messages et des images afin de détecter spam, phishing, contenu NSFW ou propos haineux. <strong>Ce contenu n'est pas stocké</strong> : il est traité en mémoire puis écarté. Les derniers messages sauvegardés pour la restauration sont décrits au §2 e et f. Seul un court descriptif de l'infraction peut figurer dans le motif d'une sanction. L'analyse d'image est réalisée <strong>localement</strong>, sans envoi à un service tiers.</p>
     <p><strong>Analyse contextuelle par un tiers (option, tous serveurs).</strong> Lorsque l'administrateur active le module <strong>Modération IA</strong>, le <strong>texte</strong> d'un message peut être transmis à un service tiers pour en évaluer le contexte&nbsp;: <strong>Groq</strong> (États-Unis), classifieur de sécurité et analyse contextuelle en français, anglais et espagnol — ou le fournisseur d'IA de l'opérateur s'il en configure un. Sur les serveurs <strong>premium</strong> s'y ajoute <strong>Perspective API (Google)</strong>, qui évalue le caractère sexuellement explicite d'un message (transmis avec l'option «&nbsp;ne pas conserver&nbsp;»).</p>
     <p><strong>Trois limites importantes.</strong> Seuls les messages <strong>déjà signalés par les filtres locaux</strong> sont transmis — jamais la totalité des conversations, et en pratique une infime part des messages. <strong>Aucune image n'est transmise</strong>&nbsp;: l'analyse d'image reste intégralement locale. Et le module <strong>n'est pas activé par défaut</strong>&nbsp;: sans action de l'administrateur, aucun texte ne quitte l'infrastructure.</p>
     <p>Un <strong>classifieur de sécurité local</strong> (Llama Guard, exécuté sur notre propre serveur) prend le relais lorsque le service tiers est indisponible ou son quota épuisé&nbsp;: dans ce cas, <strong>rien ne sort</strong>.</p>
@@ -63,12 +68,13 @@
 
     <h2>6. Durée de conservation</h2>
     <ul>
-      <li>Les données de configuration et de casier sont conservées tant que le Bot est présent sur le serveur, ou jusqu'à leur suppression.</li>
+      <li>Les données propres à un serveur (configuration, casier, signalements, sauvegardes de structure et de messages, état des salons…) sont conservées tant que le Bot est présent sur le serveur, ou jusqu'à leur suppression. Quand il en est retiré, elles sont <strong>supprimées au bout de 30 jours</strong>, sauf s'il est réinstallé entre-temps.</li>
+      <li>Les copies de sécurité de la base sont supprimées au plus tard <strong>quatre semaines</strong> après leur création : une donnée effacée de la base disparaît donc aussi de ces copies dans ce délai.</li>
       <li>Vous pouvez demander la suppression des données vous concernant à tout moment (voir §8).</li>
     </ul>
 
     <h2>7. Partage des données</h2>
-    <p>Les données ne sont partagées avec <strong>aucun tiers</strong>, sauf obligation légale. Le Bot s'appuie sur Discord, dont l'usage est régi par sa <a href="https://discord.com/privacy" target="_blank" rel="noopener">politique de confidentialité</a>.</p>
+    <p>Les données ne sont partagées avec <strong>aucun tiers</strong>, sauf obligation légale et les services d'analyse optionnels décrits au §3, sur les serveurs qui les activent. Le Bot s'appuie sur Discord, dont l'usage est régi par sa <a href="https://discord.com/privacy" target="_blank" rel="noopener">politique de confidentialité</a>.</p>
 
     <h2>8. Vos droits (RGPD)</h2>
     <p>Conformément au RGPD, vous disposez d'un droit d'<strong>accès</strong>, de <strong>rectification</strong>, d'<strong>effacement</strong>, de <strong>limitation</strong> et d'<strong>opposition</strong>. Pour les exercer, contactez <strong>eza_official</strong> sur Discord en précisant votre identifiant Discord. Vous pouvez aussi saisir la CNIL.</p>
