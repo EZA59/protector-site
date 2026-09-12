@@ -90,6 +90,7 @@
 
     <h3>Anti-spam</h3>
     <p>Bloque le flood, les messages identiques répétés, les mentions de masse et les liens d'invitation. Il gère aussi les <strong>applications ajoutées à un profil</strong> (apps utilisateur) : en cas de spam, l'auteur est expulsé, l'app bannie si possible et les messages supprimés. Un spam du même message dans plusieurs salons alerte aussi l'équipe Protector. Si l'auteur d'un spam de mentions (@everyone, mentions de masse) ne peut pas être rendu muet, faute de permission ou parce que le rôle de Protector est trop bas, le propriétaire est prévenu en privé.</p>
+    <p>Il repère aussi les <strong>messages géants</strong> : un seul message qui fait couler le salon, rempli de titres «&nbsp;#&nbsp;», de caractères très larges comme «&nbsp;﷽&nbsp;» ou de lignes vides et invisibles. Protector estime sa hauteur à l'écran et le traite comme un spam au-delà de <strong>50 lignes</strong>, ou dès vingt lignes vides. La hauteur se règle dans <code>/config → Anti-spam</code>, ou se désactive.</p>
 
     <h3>Anti-nuke &amp; restauration</h3>
     <p>Si un membre ou un bot enchaîne des <strong>actions destructrices en masse</strong> (suppression de salons/rôles, bans en rafale, webhooks), Protector le neutralise, prévient le propriétaire, puis <strong>restaure</strong> la structure depuis une sauvegarde récente : salons, rôles, permissions, positions, nom et icône, et il relie automatiquement ta configuration aux salons recréés.</p>
@@ -130,6 +131,7 @@
 
     <h2 id="moderation">Modération &amp; casier</h2>
     <p>Commandes classiques : <code>/warn</code>, <code>/mute</code>, <code>/kick</code>, <code>/ban</code>, <code>/unmute</code>, <code>/unban</code>, <code>/tempban</code>. Chaque sanction est enregistrée dans un <strong>casier par serveur</strong>, consultable avec <code>/history</code>. Les sanctions faites en dehors du bot (via le journal d'audit Discord) sont aussi captées. <code>/lockdown</code> et <code>/unlock</code> verrouillent/déverrouillent tout le serveur en cas d'urgence.</p>
+    <p><code>/clear</code> supprime en masse jusqu'à <strong>500 messages</strong> récents : tous, ceux d'un <strong>membre</strong>, ou ceux qui contiennent un <strong>mot</strong> (majuscules et accents ignorés), les deux filtres pouvant se combiner. Les messages épinglés sont gardés. Au-delà de 14 jours, Discord interdit la suppression en masse : la recherche s'arrête là, et la réponse, visible par toi seul, le précise.</p>
 
     <h2 id="signalements">Signalements</h2>
     <p>Clic droit sur un message → <strong>Signaler le message</strong> : un formulaire envoie le message au salon de signalements du serveur, où le staff peut sanctionner ou ignorer. Clic droit sur un membre → <strong>Signaler l'utilisateur</strong> : un rapport (raison, liens, images) est envoyé à l'équipe Protector, qui peut l'examiner sans rejoindre ton serveur.</p>
@@ -174,6 +176,7 @@
       <li><strong>«&nbsp;Aucune trace — vraisemblablement l'auteur lui-même&nbsp;»</strong> — Discord n'a rien écrit. C'est très probablement l'auteur, mais ce n'est <em>pas</em> une certitude, et le log ne prétend pas le contraire.</li>
     </ul>
     <p>Discord n'écrit pas une entrée d'audit par suppression&nbsp;: il regroupe les suppressions d'un même modérateur dans un même salon et incrémente un compteur, en conservant la date de la première. C'est pour cette raison qu'une attribution fondée sur la seule fraîcheur d'une entrée se trompe dès la deuxième suppression.</p>
+    <p>Une purge <code>/clear</code> tient en <strong>une seule entrée</strong> : le modérateur qui l'a lancée, les filtres utilisés, les auteurs touchés et ce qui a été épargné.</p>
 
     <h3>Valeurs Discord traduites</h3>
     <p>Aucun nom technique n'apparaît dans les logs. <code>ManageGuildExpressions</code> s'écrit «&nbsp;Gérer les émojis et les autocollants&nbsp;», un niveau de vérification <code>3</code> s'écrit «&nbsp;Élevée — membre du serveur depuis plus de 10 minutes&nbsp;». Les 49 permissions Discord, les niveaux de vérification, le filtre de contenu explicite, les notifications par défaut, la double authentification et la classification du serveur sont traduits en français, anglais et espagnol.</p>
@@ -369,6 +372,7 @@ def protector():
       <div class="cmd"><code>/warn /mute /kick /ban</code><span>Sanctions de modération</span></div>
       <div class="cmd"><code>/unmute /unban /tempban</code><span>Levée de sanction / ban temporaire</span></div>
       <div class="cmd"><code>/history</code><span>Casier d'un membre</span></div>
+      <div class="cmd"><code>/clear</code><span>Suppression en masse : tout, un membre ou un mot</span></div>
       <div class="cmd"><code>/lockdown /unlock</code><span>Verrouillage d'urgence</span></div>
       <div class="cmd"><code>/backup /restore</code><span>Sauvegarde et restauration du serveur</span></div>
       <div class="cmd"><code>/invites</code><span>Qui a invité qui</span></div>
